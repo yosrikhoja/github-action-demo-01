@@ -6,11 +6,11 @@ terraform {
     }
   }
 
-  required_version = "1.6.6"
+  required_version = ">= 1.0"
 }
 provider "aws" {
   region  = "us-east-1"         # or your preferred region
-  profile = "super_user"           # only if you are using named profiles
+  #profile = "super_user"           # only if you are using named profiles
 }
 
 data "aws_ami" "ubuntu" {
