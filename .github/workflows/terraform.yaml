@@ -1,6 +1,16 @@
 name: 'Terraform'
 
 on:
+  workflow_dispatch:
+    inputs:
+      terraform_action:
+        description: 'Terraform action to perform' 
+        default: 'production'
+        type: choice
+        options:
+          - apply
+          - destroy
+        required: true
   push:
     branches: [ "main" ]
 
@@ -30,5 +40,9 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
+        if: ${{ github.event.inputs.terraform_action == 'apply' }}
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.terraform_action == 'destroy' }}
+        run: terraform destroy -auto-approve
